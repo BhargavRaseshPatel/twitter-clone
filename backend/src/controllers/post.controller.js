@@ -1,6 +1,6 @@
 import expressAsyncHandler from "express-async-handler";
-import { Post } from "../models/post.model";
-import { User } from "../models/user.model";
+import { Post } from "../models/post.model.js";
+import { User } from "../models/user.model.js";
 import { getAuth } from "@clerk/express";
 import cloudinary from "../config/cloudinary.js";
 import { Notification } from "../models/notification.model.js";

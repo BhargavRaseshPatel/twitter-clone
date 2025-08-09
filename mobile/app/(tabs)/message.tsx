@@ -37,8 +37,6 @@ const MessageScreen = () => {
         setNewMessage("");
     };
 
-    console.log(conversationList)
-
     const sendMessage = () => {
         if (newMessage.trim() && selectedConversation) {
             // update last message in conversation

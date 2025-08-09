@@ -1,12 +1,17 @@
 import { ClerkProvider } from '@clerk/clerk-expo'
 import { tokenCache } from '@clerk/clerk-expo/token-cache'
 import { Slot } from 'expo-router'
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import '../global.css'
+
+const queryClient = new QueryClient()
 
 export default function RootLayout() {
   return (
     <ClerkProvider tokenCache={tokenCache}>
-      <Slot />
+      <QueryClientProvider client={queryClient}>
+        <Slot />
+      </QueryClientProvider>
     </ClerkProvider>
   )
 }

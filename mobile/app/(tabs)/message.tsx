@@ -122,7 +122,12 @@ const MessageScreen = () => {
                 </Text>
             </View>
 
-            <Modal visible={isChatOpen} animationType='slide' presentationStyle='pageSheet'>
+            <Modal
+              visible={isChatOpen}
+              animationType='slide'
+              presentationStyle='pageSheet'
+              onRequestClose={closeChatModal}
+            >
                 {
                     selectedConversation && (
                         <>

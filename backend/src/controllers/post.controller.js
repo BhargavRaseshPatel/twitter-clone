@@ -14,7 +14,7 @@ export const getPosts = expressAsyncHandler(async (req, res) => {
             path: "comments",
             populate: {
                 path: "user",
-                select: "username firstName lastName profiePicture"
+                select: "username firstName lastName profilePicture"
             }
         })
 

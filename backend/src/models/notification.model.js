@@ -30,4 +30,8 @@ const notificationSchema = new mongoose.Schema({
     { timestamps: true }
 )
 
-export const Notification = mongoose.model("Notification",notificationSchema)
+// Check if model already exists to prevent OverwriteModelError
+const Notification = mongoose.models.Notification || mongoose.model("Notification", notificationSchema)
+
+export { Notification }
+export default Notification

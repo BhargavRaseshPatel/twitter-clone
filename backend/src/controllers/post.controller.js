@@ -7,7 +7,7 @@ import { Notification } from "../models/notification.model.js";
 import { Comment } from "../models/comment.model.js";
 
 export const getPosts = expressAsyncHandler(async (req, res) => {
-    const posts = await Post.find()
+    const post = await Post.find()
         .sort({ createdAt: -1 })
         .populate("user", "username firstName lastName profilePicture")
         .populate({
@@ -18,7 +18,7 @@ export const getPosts = expressAsyncHandler(async (req, res) => {
             }
         })
 
-    res.status(200).json({ posts })
+    res.status(200).json({ post })
 })
 
 export const getPost = expressAsyncHandler(async (req, res) => {
@@ -68,12 +68,12 @@ export const getUserPosts = expressAsyncHandler(async (req, res) => {
 export const createPost = expressAsyncHandler(async (req, res) => {
     const { userId } = getAuth(req)
     const { content } = req.body;
+    const hasText = typeof content === "string" && content.trim().length > 0;
     const imageFile = req.file
 
-    if (!content || !imageFile) {
+    if (!hasText && !imageFile) {
         return res.status(400).json({ error: "Post must contain either text or image" })
     }
-
     const user = await User.findOne({ clerkId: userId })
     if (!user) return res.status(404).json({ error: "User not found" })
     let imageUrl = "";

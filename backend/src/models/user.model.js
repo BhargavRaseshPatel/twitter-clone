@@ -35,7 +35,8 @@ const userSchema = new mongoose.Schema({
      bio: {
       type: String,
       default: "",
-      maxLength: 160,
+      trim: true,
+      maxlength: [160, "Bio cannot exceed 160 characters"],
     },
     location: {
         type: String,
@@ -57,4 +58,8 @@ const userSchema = new mongoose.Schema({
     { timestamps: true }
 )
 
-export const User = mongoose.model("User", userSchema)
+// Check if model already exists to prevent OverwriteModelError
+const User = mongoose.models.User || mongoose.model("User", userSchema)
+
+export { User }
+export default User

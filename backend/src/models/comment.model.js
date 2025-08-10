@@ -26,4 +26,8 @@ const commentSchema = new mongoose.Schema({
     { timestamps: true }
 )
 
-export const Comment = mongoose.model("Comment",commentSchema)
+// Check if model already exists to prevent OverwriteModelError
+const Comment = mongoose.models.Comment || mongoose.model("Comment", commentSchema)
+
+export { Comment }
+export default Comment

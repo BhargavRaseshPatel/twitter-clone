@@ -12,6 +12,8 @@ export const createApiClient = (getToken: () => Promise<string| null>) : AxiosIn
         if(token) {
             config.headers.Authorization = `Bearer ${token}`
         }
+        // Avoid logging secrets; in dev, log only presence
+        if (__DEV__) console.debug('[api] auth token present:', Boolean(token))
 
         return config
     })
@@ -26,6 +28,6 @@ export const useApiClient = (): AxiosInstance => {
 
 export const userApi = {
     syncUser : (api : AxiosInstance) => api.post("/users/sync"),
-    getCurrentUser : (api : AxiosInstance ) => api.get("/users/me"),
+    getCurrentUser : (api : AxiosInstance ) => api.post("/users/me"),
     updateProfile : (api : AxiosInstance, data : any) => api.put("/users/profile",data)
 }

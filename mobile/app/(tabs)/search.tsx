@@ -26,8 +26,15 @@ const SearhScreen = () => {
         <View className='p-4'>
             <Text className='text-xl font-bold text-gray-900 mb-4'>Trending for you</Text>
 
-            {TRENDING_TOPICS.map((item, index) => (
-                <TouchableOpacity key={index} className='py-3 border-b border-gray-100'>
+            {TRENDING_TOPICS.map((item) => (
+                <TouchableOpacity
+                  key={item.topic}
+                  className='py-3 border-b border-gray-100'
+                  accessibilityRole='button'
+                  onPress={() => {
+                    // TODO: navigate or run a search for this topic
+                  }}
+                >
                     <Text className='font-bold text-gray-900 text-lg'>{item.topic}</Text>
                     <Text className='text-gray-500 text-sm'>{item.tweets} Tweets</Text>
                 </TouchableOpacity>

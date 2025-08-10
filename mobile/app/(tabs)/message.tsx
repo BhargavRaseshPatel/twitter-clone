@@ -122,7 +122,12 @@ const MessageScreen = () => {
                 </Text>
             </View>
 
-            <Modal visible={isChatOpen} animationType='slide' presentationStyle='pageSheet'>
+            <Modal
+              visible={isChatOpen}
+              animationType='slide'
+              presentationStyle='pageSheet'
+              onRequestClose={closeChatModal}
+            >
                 {
                     selectedConversation && (
                         <>
@@ -139,7 +144,7 @@ const MessageScreen = () => {
                                 <View className="flex-1">
                                     <View className="flex-row items-center justify-between mb-1">
                                         <View className="flex-1 gap-1">
-                                            < View className='flex-row'>
+                                            <View className='flex-row'>
                                             <Text className="font-semibold text-gray-900">{selectedConversation.user.name}</Text>
                                             {selectedConversation.user.verified && (
                                                 <Feather name="check-circle" size={16} color="#1DA1F2" className="ml-1" />

@@ -30,4 +30,8 @@ const postSchema = new mongoose.Schema({
     { timestamps: true }
 )
 
-export const Post = mongoose.model("Post", postSchema)
+// Check if model already exists to prevent OverwriteModelError
+const Post = mongoose.models.Post || mongoose.model("Post", postSchema)
+
+export { Post }
+export default Post

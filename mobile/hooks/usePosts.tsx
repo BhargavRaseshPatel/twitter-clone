@@ -1,13 +1,13 @@
 import { postApi, useApiClient } from "@/utlis/api"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
- export const usePosts = ( ) => {
+ export const usePosts = (username?: string) => {
     const api = useApiClient()
     const queryClient = useQueryClient()
 
     const { data: postsData, isLoading, error , refetch} = useQuery({
-        queryKey : ["posts"],
-        queryFn : () => postApi.getPosts(api),
+        queryKey : username ? ["userPosts", username] :["posts"],
+        queryFn : () => (username ? postApi.getUserPosts(api, username) : postApi.getPosts(api)),
         select : (response) => response.data.post
     })
 
@@ -19,10 +19,8 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
     const deletePostMutation = useMutation({
         mutationFn : (postId : string) => postApi.deletePost(api, postId),
         onSuccess : () => {
-
-            // todo : // what is the user of invalidateQueries
-            queryClient.invalidateQueries({queryKey : ["posts"]}),
-            queryClient.invalidateQueries({queryKey : ["userPosts"]})
+            queryClient.invalidateQueries({queryKey : ["posts"]});
+            if(username) queryClient.invalidateQueries({queryKey : ["userPosts", username]})
         }
     })
 

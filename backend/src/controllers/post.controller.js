@@ -7,7 +7,7 @@ import { Notification } from "../models/notification.model.js";
 import { Comment } from "../models/comment.model.js";
 
 export const getPosts = expressAsyncHandler(async (req, res) => {
-    const post = await Post.find()
+    const posts = await Post.find()
         .sort({ createdAt: -1 })
         .populate("user", "username firstName lastName profilePicture")
         .populate({
@@ -18,7 +18,7 @@ export const getPosts = expressAsyncHandler(async (req, res) => {
             }
         })
 
-    res.status(200).json({ post })
+    res.status(200).json({ posts })
 })
 
 export const getPost = expressAsyncHandler(async (req, res) => {
@@ -38,7 +38,7 @@ export const getPost = expressAsyncHandler(async (req, res) => {
         return res.status(404).json({ error: "Post not found" })
     }
 
-    res.status(200).json({ posts })
+    res.status(200).json({ post })
 })
 
 export const getUserPosts = expressAsyncHandler(async (req, res) => {
@@ -47,7 +47,7 @@ export const getUserPosts = expressAsyncHandler(async (req, res) => {
     const user = await User.findOne({ username })
     if (!user) return res.status(404).json({ error: "User not found" })
 
-    const post = await Post.find({ user: user._id })
+    const posts = await Post.find({ user: user._id })
         .sort({ createdAt: -1 })
         .populate("user", "username firstName lastName profilePicture")
         .populate({
@@ -58,8 +58,8 @@ export const getUserPosts = expressAsyncHandler(async (req, res) => {
             }
         })
 
-    if (!post) {
-        return res.status(404).json({ error: "Post not found" })
+    if (!posts.length) {
+        return res.status(404).json({ error: "No posts found" })
     }
 
     res.status(200).json({ posts })

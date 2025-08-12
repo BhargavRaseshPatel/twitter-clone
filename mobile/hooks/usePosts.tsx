@@ -8,7 +8,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
     const { data: postsData, isLoading, error , refetch} = useQuery({
         queryKey : ["posts"],
         queryFn : () => postApi.getPosts(api),
-        select : (response) => response.data.posts
+        select : (response) => response.data.post
     })
 
     const likePostMutation = useMutation({

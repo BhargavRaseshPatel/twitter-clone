@@ -3,7 +3,6 @@ import React from 'react'
 import { Post } from '@/types'
 import { useComments } from '@/hooks/useComments'
 import { useCurrentUser } from '@/hooks/useCurrentUser'
-import PostCard from './PostCard'
 
 const CommentsModal = ({ selectedPost, onClose }: { selectedPost: Post, onClose: () => void }) => {
 

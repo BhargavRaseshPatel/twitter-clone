@@ -8,12 +8,15 @@ import { Feather } from '@expo/vector-icons'
 import { format } from 'date-fns'
 import { usePosts } from '@/hooks/usePosts'
 import PostsList from '../components/PostsList'
+import { useProfile } from '@/hooks/useProfile'
+import EditProfileModal from '../components/EditProfileModal'
 
 const ProfileScreen = () => {
   const { currentUser, isLoading } = useCurrentUser()
   const inserts = useSafeAreaInsets()
 
   const { posts: userPosts, refetch: refetchPosts, isLoading: isRefetching } = usePosts(currentUser?.username)
+  const { isEditModalVisible, openEditModal, closeEditModal, formData, saveProfile, updateFormField, isUpdating } = useProfile()
 
   return (
     <SafeAreaView className="flex-1 bg-white">
@@ -47,7 +50,7 @@ const ProfileScreen = () => {
             />
             <TouchableOpacity
               className="border border-gray-300 px-6 py-2 rounded-full"
-            // onPress={openEditModal}
+            onPress={openEditModal}
             >
               <Text className="font-semibold text-gray-900">Edit profile</Text>
             </TouchableOpacity>
@@ -96,6 +99,8 @@ const ProfileScreen = () => {
         </View>
         <PostsList username={currentUser?.username} />
       </ScrollView>
+      <EditProfileModal isVisible={isEditModalVisible} onClose={closeEditModal} formData={formData} 
+      saveProfile={saveProfile} updateFormField={updateFormField} isUpdating={isUpdating}/>
     </SafeAreaView>
   )
 }

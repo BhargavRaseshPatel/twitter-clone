@@ -58,10 +58,6 @@ export const getUserPosts = expressAsyncHandler(async (req, res) => {
             }
         })
 
-    if (!posts.length) {
-        return res.status(404).json({ error: "No posts found" })
-    }
-
     res.status(200).json({ posts })
 })
 
